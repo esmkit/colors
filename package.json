@@ -2,7 +2,7 @@
   "name": "@esmkit/colors",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "@esmkit/boilerplate",
+  "description": "The tiniest and the fastest library for terminal output formatting with ANSI colors",
   "author": "Billgo <hi@billgo.me>",
   "bugs": "https://github.com/esmkit/colors/issues",
   "repository": "git+ssh://git@github.com:esmkit/colors.git",
@@ -33,7 +33,6 @@
     "build:esm": "bunx tsup",
     "start": "bun run --watch examples/index.ts"
   },
-  "dependencies": {},
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
     "@devjskit/biome-config": "^0.2.1",

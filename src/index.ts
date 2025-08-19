@@ -1,4 +1,4 @@
-export type Formatter = (input: string | number | null | undefined) => string
+export type Formatter = (input: string | number | null | undefined) => string;
 
 export interface Colors {
   isColorSupported: boolean;
@@ -72,25 +72,14 @@ export function detectColorSupport(ctx: DetectContext = {}): boolean {
   if (typeof ctx.force === "boolean") return ctx.force;
 
   const proc = getGlobalProcessLike();
-  const argv = ctx.argv ?? (proc?.argv ?? []);
-  const env = ctx.env ?? (proc?.env ?? {});
+  const argv = ctx.argv ?? proc?.argv ?? [];
+  const env = ctx.env ?? proc?.env ?? {};
   const platform = ctx.platform ?? proc?.platform;
-  const stdoutIsTTY =
-    typeof ctx.stdoutIsTTY === "boolean"
-      ? ctx.stdoutIsTTY
-      : !!(proc?.stdout && typeof proc.stdout.isTTY === "boolean"
-          ? proc.stdout.isTTY
-          : undefined);
+  const stdoutIsTTY = typeof ctx.stdoutIsTTY === "boolean" ? ctx.stdoutIsTTY : !!(proc?.stdout && typeof proc.stdout.isTTY === "boolean" ? proc.stdout.isTTY : undefined);
 
-  const noColor =
-    !!env.NO_COLOR || (Array.isArray(argv) && argv.includes("--no-color"));
+  const noColor = !!env.NO_COLOR || (Array.isArray(argv) && argv.includes("--no-color"));
 
-  const yesColor =
-    !!env.FORCE_COLOR ||
-    (Array.isArray(argv) && argv.includes("--color")) ||
-    platform === "win32" ||
-    (stdoutIsTTY && env.TERM !== "dumb") ||
-    !!env.CI;
+  const yesColor = !!env.FORCE_COLOR || (Array.isArray(argv) && argv.includes("--color")) || platform === "win32" || (stdoutIsTTY && env.TERM !== "dumb") || !!env.CI;
 
   return !noColor && yesColor;
 }
@@ -111,14 +100,12 @@ function makeFormatter(open: string, close: string, replace = open): Formatter {
   return (input: unknown) => {
     const string = String(input);
     const index = string.indexOf(close, open.length);
-    return ~index
-      ? open + replaceClose(string, close, replace, index) + close
-      : open + string + close;
+    return ~index ? open + replaceClose(string, close, replace, index) + close : open + string + close;
   };
 }
 
 export function createColors(enabled: boolean = detectColorSupport()): Colors {
-  const f = enabled ? makeFormatter : (() => (x: unknown) => String(x));
+  const f = enabled ? makeFormatter : () => (x: unknown) => String(x);
 
   return {
     isColorSupported: enabled,
