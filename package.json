@@ -1,0 +1,50 @@
+{
+  "name": "@esmkit/colors",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "@esmkit/boilerplate",
+  "author": "Billgo <hi@billgo.me>",
+  "bugs": "https://github.com/esmkit/colors/issues",
+  "repository": "git+ssh://git@github.com:esmkit/colors.git",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./*": "./*"
+  },
+  "scripts": {
+    "prepublishOnly": "bun run build",
+    "build": "bunx rimraf dist && bun run build:esm && bun run build:bun",
+    "build:bun": "bun run bun.build.mjs",
+    "build:esm": "bunx tsup",
+    "start": "bun run --watch examples/index.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@devjskit/biome-config": "^0.2.1",
+    "@types/bun": "^1.2.20",
+    "@types/node": "^24.3.0",
+    "@types/web": "^0.0.262",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}
